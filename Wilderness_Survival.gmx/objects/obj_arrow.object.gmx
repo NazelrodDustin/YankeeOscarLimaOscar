@@ -36,6 +36,7 @@ dummy.xOffset = 0;
 dummy.yOffset = 0;
 lenOffX = 0;
 distOff = 0;
+
 </string>
           </argument>
         </arguments>
@@ -88,6 +89,14 @@ if (isDummy == 1){
     image_angle = stickTo.image_angle + angleOffset;    
     x = stickTo.x + dummy.xOffset - lengthdir_x(distOff,image_angle);
     y = stickTo.y + dummy.yOffset - lengthdir_y(distOff,image_angle);
+    depth = stickTo.depth - 5;
+    
+    if (stickTo.state == "sleeping"){
+        visible = 0;
+    }else{
+        visible = 1;
+    }
+    
     if (!place_meeting(x,y,obj_enemyParent)){
         instance_destroy();
     }
@@ -95,19 +104,21 @@ if (isDummy == 1){
     if (force != 0){
         if (collision_rectangle(x - 1, y - 1, x + 17, y + 5, obj_enemyParent, true, true)){
             var enemy = (collision_rectangle(x - 1, y - 1, x + 17, y + 5, obj_enemyParent, true, true));
-            var damageDelt = force * 2;
-            enemy.hp -= damageDelt;
-            image_speed = 0;
-            force = 0;
-            dummy = instance_create(self.x, self.y, self.object_index);
-            dummy.isDummy = 1;
-            dummy.stickTo = enemy.id;
-            dummy.angleOffset = self.image_angle - enemy.image_angle;
-            dummy.xOffset = self.x - enemy.x;
-            dummy.yOffset = self.y - enemy.y;
-            dummy.distOff = distance_to_point(enemy.x,enemy.y);
-            dummy.image_index = self.image_index
-            instance_destroy()
+            if (enemy.state != "sleeping"){
+                var damageDelt = force * 2;
+                enemy.hp -= damageDelt;
+                image_speed = 0;
+                force = 0;
+                dummy = instance_create(self.x, self.y, self.object_index);
+                dummy.isDummy = 1;
+                dummy.stickTo = enemy.id;
+                dummy.angleOffset = self.image_angle - enemy.image_angle;
+                dummy.xOffset = self.x - enemy.x;
+                dummy.yOffset = self.y - enemy.y;
+                dummy.distOff = distance_to_point(enemy.x,enemy.y);
+                dummy.image_index = self.image_index
+                instance_destroy()
+            }
         }
         motion_set(image_angle,force * 10);
         force -= .1

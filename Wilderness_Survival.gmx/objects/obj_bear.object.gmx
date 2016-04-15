@@ -42,6 +42,7 @@
             <string>///Vars
 
 myCave = -4;
+objType = "bear"
 
 //Wander STATE
 activeTime = 2000;
@@ -53,6 +54,7 @@ sleepTime = irandom_range(1000,1800);
 
 //Wounded
 bleedTimer = 0;
+imageTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -75,7 +77,7 @@ bleedTimer = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//depth = -y;
+            <string>depth = -y;
 </string>
           </argument>
         </arguments>
@@ -219,9 +221,51 @@ if (hp &lt;= 50){
     if (bleedTimer &gt;= 100){
         instance_create(x + irandom(4),y,obj_bloodPuddle);
         bleedTimer = 0;
-    }   
+    }
+}
+
+if (hp &lt;= 0){
+    state = "dead";
+    sprite_index = spr_bearDead;
+    image_speed = 2 / room_speed;
+    
+    if (image_index &gt;= 2){
+        image_speed = 0;
+        imageTimer += 1 / room_speed;
+    }
+    
+    if (imageTimer &gt;= 60){
+        if (image_index != image_number - 1){
+            image_index += 1;
+        }else{
+            instance_destroy()
+        }
+        imageTimer = 0;  
+    }    
 }
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>

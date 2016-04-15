@@ -35,6 +35,7 @@ playerOne = instance_create(irandom(room_width), irandom(room_height), obj_playe
 playerTwo = instance_create(irandom(room_width), irandom(room_height), obj_player);
 worldGeneration = instance_create(0, 0, obj_worldGen);
 viewController = instance_create(0, 0, obj_viewControl);
+drawController = instance_create(0, 0, obj_drawControl);
 
 
 viewController.playerOne = playerOne;
@@ -42,6 +43,8 @@ viewController.playerTwo = playerTwo;
 
 playerOne.playerNumber = 1;
 playerTwo.playerNumber = 2;
+playerOne.drawController = drawController;
+playerTwo.drawController = drawController;
 </string>
           </argument>
         </arguments>

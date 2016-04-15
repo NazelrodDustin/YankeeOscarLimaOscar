@@ -4,9 +4,15 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_arrowFire0</sound>
+    <sound>sound\snd_arrowFire1</sound>
+    <sound>sound\snd_arrowFire2</sound>
+    <sound>sound\snd_arrowFire3</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_bear</sprite>
+    <sprite>sprites\spr_bearDead</sprite>
     <sprite>sprites\spr_tree</sprite>
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_rock</sprite>
@@ -24,6 +30,9 @@
   <scripts name="scripts">
     <script>scripts\scr_distanceFromPointToPoint.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_arialBlack</font>
+  </fonts>
   <objects name="objects">
     <objects name="Control Objects">
       <object>objects\obj_gameControl</object>
@@ -32,6 +41,7 @@
       <object>objects\obj_foliageChunkParent</object>
       <object>objects\obj_enemyParent</object>
       <object>objects\obj_worldGen</object>
+      <object>objects\obj_drawControl</object>
     </objects>
     <objects name="Enemies">
       <object>objects\obj_bear</object>

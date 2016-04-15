@@ -46,8 +46,7 @@ if (distance_to_object(instance_nearest(x,y,obj_player)) &lt;= chunkWidth*2){
         foliageArray[i,0] = foliageType;
         foliageArray[i,1] = irandom(chunkWidth);
         foliageArray[i,2] = irandom(chunkHeight);
-        foliageArray[i,3] = instance_create(x + foliageArray[i,1],y + foliageArray[i,2],foliageType);
-           
+        foliageArray[i,3] = instance_create(x + foliageArray[i,1],y + foliageArray[i,2],foliageType);   
     }
     chunkGenerated = 1;
 }else{
@@ -80,11 +79,11 @@ if (distance_to_object(instance_nearest(x,y,obj_player)) &lt;= chunkWidth*2){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Spawning/despawning the chunk
+            <string>    ///Spawning/despawning the chunk
 
 //If both players are out of range of the chunk, despawn the chunk
 var nearestPlayer = instance_nearest(self.x + (chunkWidth / 2), self.y + (chunkHeight / 2), obj_player);
-if (scr_distanceFromPointToPoint(self.x + (chunkWidth / 2), self.y + (chunkHeight / 2), nearestPlayer.x, nearestPlayer.y) &gt;= chunkWidth * 1.3 &amp;&amp; chunkGenerated){
+if (scr_distanceFromPointToPoint(self.x + (chunkWidth / 2), self.y + (chunkHeight / 2), nearestPlayer.x, nearestPlayer.y) &gt;= chunkWidth * 1.5 &amp;&amp; chunkGenerated){
     var i = 0;
     repeat(foliageAmount+1){
         with(foliageArray[i,3]){
@@ -93,7 +92,7 @@ if (scr_distanceFromPointToPoint(self.x + (chunkWidth / 2), self.y + (chunkHeigh
         }
         i++;
     }  
-    chunkGenerated = 0; 
+    chunkGenerated = 0;
 }
 
 //If a player gets in range of the chunk, spawn the chunk
@@ -101,7 +100,7 @@ var nearestPlayer = instance_nearest(self.x + (chunkWidth / 2), self.y + (chunkH
 if (scr_distanceFromPointToPoint(self.x + (chunkWidth / 2), self.y + (chunkHeight / 2), nearestPlayer.x, nearestPlayer.y) &lt;= chunkWidth * 1.3 &amp;&amp; !chunkGenerated){
     var a = 0;
     repeat(foliageAmount+1){
-        foliageArray[a,3] = instance_create(x + foliageArray[a,1],y + foliageArray[a,2],foliageArray[a,0]);
+        foliageArray[a,3] = instance_create(x + foliageArray[a,1],y + foliageArray[a,2],foliageArray[a,0]);  
         a++;
     }  
     chunkGenerated = 1;     

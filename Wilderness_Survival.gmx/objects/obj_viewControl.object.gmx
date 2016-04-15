@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1000000000</depth>
+  <depth>-100</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>///init
-
+depth = -100000000000000000000000000000000000000000000000000000
 debug = false;
 zoom = 1;
 zoomChanged = false;
@@ -34,6 +34,7 @@ mouseXOffset = 0;
 mouseYOffset = 0;
 mouseXPos = 0;
 mouseYPos = 0;
+viewMult = 100;
 </string>
           </argument>
         </arguments>
@@ -330,30 +331,57 @@ if (debug){
 if (playerOne.isMoving || playerTwo.isMoving){
     instance_deactivate_object(obj_water);
     instance_deactivate_object(obj_foliageChunkParent);
-    var viewMult = 5;
+
     if (view_visible[0]){
-        instance_activate_region(view_xview[0] - ((view_wview[0] * viewMult) / 2), view_yview[0] - ((view_hview[0] * viewMult) / 2), view_wview[0] + (view_xview[0] + ((view_wview[0] * viewMult) / 2)), view_hview[0] + (view_yview[0] + ((view_hview[0] * viewMult) / 2)), true);
+        var p1currentChunkLeftBottom = instance_nearest(playerOne.x - 1000, playerOne.y + 1000, obj_foliageChunkParent);
+        var p1currentChunkLeft = instance_nearest(playerOne.x - 1000, playerOne.y, obj_foliageChunkParent);
+        var p1currentChunkLeftTop = instance_nearest(playerOne.x - 1000, playerOne.y - 1000, obj_foliageChunkParent);
+        var p1currentChunkTop = instance_nearest(playerOne.x, playerOne.y - 1000, obj_foliageChunkParent);
+        var p1currentChunkRightTop = instance_nearest(playerOne.x + 1000, playerOne.y - 1000, obj_foliageChunkParent);
+        var p1currentChunkRight = instance_nearest(playerOne.x + 1000, playerOne.y, obj_foliageChunkParent);
+        var p1currentChunkRightBottom = instance_nearest(playerOne.x + 1000, playerOne.y + 1000, obj_foliageChunkParent);
+        var p1currentChunkBottom = instance_nearest(playerOne.x, playerOne.y + 1000, obj_foliageChunkParent);
+        instance_activate_object(p1currentChunkLeftBottom);
+        instance_activate_object(p1currentChunkLeft);
+        instance_activate_object(p1currentChunkLeftTop);
+        instance_activate_object(p1currentChunkTop);
+        instance_activate_object(p1currentChunkRightTop);
+        instance_activate_object(p1currentChunkRight);
+        instance_activate_object(p1currentChunkRightBottom);
+        instance_activate_object(p1currentChunkBottom);
     }
     
     if (view_visible[2]){
-        instance_activate_region(view_xview[2] - ((view_wview[2] * viewMult) / 2), view_yview[2] - ((view_hview[2] * viewMult) / 2), view_wview[2] + (view_xview[2] + ((view_wview[2] * viewMult) / 2)), view_hview[2] + (view_yview[2] + ((view_hview[2] * viewMult) / 2)), true);
+        var p2currentChunkLeftBottom = instance_nearest(playerTwo.x - 1000, playerTwo.y + 1000, obj_foliageChunkParent);
+        var p2currentChunkLeft = instance_nearest(playerTwo.x - 1000, playerTwo.y, obj_foliageChunkParent);
+        var p2currentChunkLeftTop = instance_nearest(playerTwo.x - 1000, playerTwo.y - 1000, obj_foliageChunkParent);
+        var p2currentChunkTop = instance_nearest(playerTwo.x, playerTwo.y - 1000, obj_foliageChunkParent);
+        var p2currentChunkRightTop = instance_nearest(playerTwo.x + 1000, playerTwo.y - 1000, obj_foliageChunkParent);
+        var p2currentChunkRight = instance_nearest(playerTwo.x + 1000, playerTwo.y, obj_foliageChunkParent);
+        var p2currentChunkRightBottom = instance_nearest(playerTwo.x + 1000, playerTwo.y + 1000, obj_foliageChunkParent);
+        var p2currentChunkBottom = instance_nearest(playerOne.x, playerTwo.y + 1000, obj_foliageChunkParent);
+        instance_activate_object(p2currentChunkLeftBottom);
+        instance_activate_object(p2currentChunkLeft);
+        instance_activate_object(p2currentChunkLeftTop);
+        instance_activate_object(p2currentChunkTop);
+        instance_activate_object(p2currentChunkRightTop);
+        instance_activate_object(p2currentChunkRight);
+        instance_activate_object(p2currentChunkRightBottom);
+        instance_activate_object(p2currentChunkBottom);
     }
     
-    if (view_visible[7]){
-        instance_activate_region(view_xview[7], view_yview[7], view_wview[7], view_hview[7], true);
-    }
-    
-    if (!gamepad_is_connected(0)){
-        instance_deactivate_object(playerOne);
-    }else{
-        instance_activate_object(playerOne);
-    }
-    
-    if (!gamepad_is_connected(1)){
-        instance_deactivate_object(playerTwo);
-    }else{
-        instance_activate_object(playerTwo);
-    }
+
+}
+if (!gamepad_is_connected(0)){
+    instance_deactivate_object(playerOne);
+}else{
+    instance_activate_object(playerOne);
+}
+
+if (!gamepad_is_connected(1)){
+    instance_deactivate_object(playerTwo);
+}else{
+    instance_activate_object(playerTwo);
 }
 </string>
           </argument>
@@ -382,6 +410,80 @@ if (playerOne.isMoving || playerTwo.isMoving){
     view_yview[7] += (mouseYOffset * zoom) - mouseYPos;
     zoomChanged = false;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_colour($0088ff)    
+
+draw_text(view_xview[0],view_yview[0],string(instance_number(obj_foliageChunkParent)));
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="10" enumb="104">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>view_xview[7] = playerTwo.x - (view_wview[7] / 2);
+view_yview[7] = playerTwo.y - (view_hview[7] / 2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="10" enumb="103">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>view_xview[7] = playerOne.x - (view_wview[7] / 2);
+view_yview[7] = playerOne.y - (view_hview[7] / 2);
 </string>
           </argument>
         </arguments>
