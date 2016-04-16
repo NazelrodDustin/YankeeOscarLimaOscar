@@ -110,7 +110,6 @@ ds_list_clear(foliageList);
             <kind>1</kind>
             <string>///Generate water
 if (irandom(50) == 1){
-    show_debug_message("lake");
     hasLake = 1;
     randomize();
     lakeSeed = random_get_seed();
