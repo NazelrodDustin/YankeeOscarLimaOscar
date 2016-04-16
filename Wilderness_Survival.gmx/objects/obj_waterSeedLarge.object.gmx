@@ -53,7 +53,7 @@
 
 myChunk = noone;
 lakeSize = irandom_range(180,200);
-lakeSeed = myChunk.lakeSeed;
+lakeSeed = 0;
 
 
 var xx = choose(0,32,64,96);

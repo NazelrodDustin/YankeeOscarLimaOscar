@@ -32,7 +32,8 @@ isMoving = 0;
 playerNumber = 0;
 inaccuracy = 0;
 force = 0;
-arrowShot = 0
+arrowShot = 0;
+
 gamepadLeftHorizontal = gamepad_axis_value(playerNumber - 1, gp_axislh);
 gamepadLeftVertical = gamepad_axis_value(playerNumber - 1, gp_axislv);
 
