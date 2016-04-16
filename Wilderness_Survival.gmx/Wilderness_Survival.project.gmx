@@ -30,6 +30,8 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\scr_distanceFromPointToPoint.gml</script>
+    <script>scripts\scr_despawnChunk.gml</script>
+    <script>scripts\scr_spawnChunk.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_arialBlack</font>
