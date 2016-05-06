@@ -79,7 +79,7 @@ mySpawner = noone;
             <kind>1</kind>
             <string>
 //Despawn
-if (!instance_exists(mySpawner)){
+/*if (!instance_exists(mySpawner)){
     instance_destroy();
 }
 </string>

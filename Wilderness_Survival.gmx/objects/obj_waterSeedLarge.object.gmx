@@ -84,6 +84,42 @@ for (i = 0; i &lt; lakeSize; i++){
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var myId = id;
+    with(obj_water){
+        if (mySpawner == other.id){
+            instance_destroy();
+            (other.myChunk).lakeSpawned = 0;
+            (other.myChunk).myLake = noone;
+            
+            with(myId){
+                instance_destroy();
+            }
+              
+        }
+    
+    } 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -103,17 +139,26 @@ for (i = 0; i &lt; lakeSize; i++){
             <kind>1</kind>
             <string>///Spawning/despawning
 
-if (distance_to_object(obj_player) &gt;= (myChunk.chunkWidth * 3)){
-    
+if (distance_to_object(obj_player) &gt;= (myChunk.chunkWidth * 2)){
+    var myId = id;
     with(obj_water){
         if (mySpawner == other.id){
             instance_destroy();
+            (other.myChunk).lakeSpawned = 0;
+            (other.myChunk).myLake = noone;
+            
+            with(myId){
+                instance_destroy();
+            }
+              
         }
     
     } 
-    myChunk.lakeSpawned = 0;
-    myChunk.myLake = noone;
-    instance_destroy();     
+      
+}
+
+if (!instance_exists(myChunk)){
+    instance_destroy();
 }
 </string>
           </argument>

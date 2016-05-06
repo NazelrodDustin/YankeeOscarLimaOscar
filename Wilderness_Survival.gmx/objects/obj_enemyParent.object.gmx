@@ -33,6 +33,14 @@ wanderTimer = 0; //wander timer
 wanderTime = 500; //Time to wander
 wanderX = irandom(room_width);
 wanderY = irandom(room_height);
+hungerLevel = 0;
+hungerThreshold = irandom_range(900,1600);
+
+//Shitting 
+foodBuildUp = 0;
+foodBuildUpThreshold = 300;
+shitTimer = 0;
+turds = 0;
 
 </string>
           </argument>
@@ -81,6 +89,32 @@ image_angle = direction;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Chunks
+
+if (!place_meeting(x, y, obj_foliageChunkParent)){
+    var rangeMult = 1.5;
+    instance_activate_region(x - (obj_worldGen.chunkSize * rangeMult/2),y - (obj_worldGen.chunkSize * rangeMult/2), view_wview[0] + ((obj_worldGen.chunkSize * rangeMult/2) * 2),view_hview[0] + ((obj_worldGen.chunkSize * rangeMult/2) * 2), 1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///Wander
 
 if (state == "wander"){
@@ -102,7 +136,195 @@ if (state == "wander"){
         wanderX = irandom(room_width);
         wanderY = irandom(room_height);    
     }
+    
+    //If the bear needs to go shit, make it shit ;)
+    if (foodBuildUp &gt;= foodBuildUpThreshold){
+        state = "shitting";
+        wanderTimer = 0;
+    }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Hunger
+
+//If the bear gets hungry, make it search for food
+if (state = "wander"){
+    hungerLevel ++;
+}
+
+if (hungerLevel &gt;= hungerThreshold){
+    //Set the state from wandering
+    if (state == "wander"){
+        wanderTimer = 0;
+        state = "searchingForFood";    
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Searching for food
+
+//Make the animal search for food then set it to the eating state
+if (state == "searchingForFood"){
+    if (instance_nearest(x, y, obj_bush).foodLeft &gt;= 100){
+        var target = instance_nearest(x, y, obj_bush);
+    }else{
+        var noGoTarget = instance_nearest(x, y, obj_bush);
+        with (noGoTarget){
+            var target = instance_nearest(x + 200, y, obj_bush);
+        }
+    }
+    if (!place_meeting(x, y, target)){
+        mp_potential_step(target.x, target.y, 1, 0);  
+    }else{
+        state = "eating"
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Eating
+
+if (state == "eating"){
+    var food = instance_nearest(x, y, obj_bush);
+    image_angle = point_direction(x, y, food.x, food.y);
+    hungerLevel -= 8;
+    food.foodLeft -= .5;
+    foodBuildUp ++;
+    //If the bush runs out of berries, set the state back to searching 
+    if (food.foodLeft &lt;= 0 &amp;&amp; hungerLevel &gt; 10){
+        state = "searchingForFood";    
+    }
+    //If the bear isn't hungery anymore, set the state back to wandering
+    if (hungerLevel &lt;= 0){
+        state = "wander";
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Shitting
+
+if (state == "shitting"){
+    shitTimer ++;
+    if (shitTimer &gt;= 120){
+        shitTimer = 0;
+        var shitX = lengthdir_x(sprite_width / 2, -image_angle);
+        var shitY = lengthdir_y(sprite_height / 2, -image_angle);
+        instance_create((self.x - shitX), (self.y + shitY), obj_shit);
+        turds++;
+    }
+    if (turds &gt;= 5){
+        state = "wander";
+        shitTimer = 0;
+        turds = 0;
+        foodBuildUp = 0;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Sprite and Debug
+draw_self();
+
+if (obj_viewControl.debug){
+    draw_text(x, y - 20, "State: " + string(state));
+    draw_text(x, y - 40, "HungerLevel: " + string(hungerLevel));
+    draw_text(x, y - 60, "HungerThres: " + string(hungerThreshold));
+    draw_text(x, y - 80, "FoodBuildUp: " + string(foodBuildUp));
+    draw_text(x, y - 100, "FoodBuildUpThreshold: " + string(foodBuildUpThreshold));
+    draw_text(x, y - 120, "shitTimer: " + string(shitTimer));
+    draw_text(x, y - 140, "turds: " + string(turds));
+}
+
 </string>
           </argument>
         </arguments>
