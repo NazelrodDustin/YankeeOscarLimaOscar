@@ -179,7 +179,7 @@ if (irandom(50) == 1){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Spawning/despawning the chunk
+            <string> ///Spawning/despawning the chunk
 
 
 
@@ -211,7 +211,7 @@ if (instance_exists(obj_player)){
             chunkGenerated = 1;    
         }   
     }else{
-        if (scr_distanceFromPointToPoint(nearestPlayer.x,nearestPlayer.y,x + (chunkWidth / 2), y + (chunkHeight / 2)) &gt;= (chunkWidth * 1.4)){
+        if (scr_distanceFromPointToPoint(nearestPlayer.x,nearestPlayer.y,x + (chunkWidth / 2), y + (chunkHeight / 2)) &gt;= (chunkWidth * 1.4) &amp;&amp; (scr_distanceFromPointToPoint(nearestEnemy.x,nearestEnemy.y,x + (chunkWidth / 2), y + (chunkHeight / 2)) &gt;= (chunkWidth * 1.4))){
             scr_despawnChunk();
             chunkGenerated = 0; 
             instance_deactivate_object(id);   
@@ -221,6 +221,19 @@ if (instance_exists(obj_player)){
     if (!chunkGenerated){
         instance_deactivate_object(id);
     }
+}
+
+//Bears
+if (instance_exists(obj_bear)){
+       
+    if (!chunkGenerated){
+        if (scr_distanceFromPointToPoint(nearestEnemy.x,nearestEnemy.y,x + (chunkWidth / 2), y + (chunkHeight / 2)) &lt;= (chunkWidth * 1.4)){
+            scr_spawnChunk();
+            chunkGenerated = 1;    
+        }   
+    }
+    
+    
 }
 
 
@@ -240,37 +253,6 @@ if (hasLake &amp;&amp; !lakeSpawned &amp;&amp; (distanceToPlayer &lt;= chunkWidt
     }
 }
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Activating chunks
-
-/*var midX = x + (chunkWidth / 2);
-var midY = y + (chunkHeight / 2);
-
-if (place_meeting(x,y,obj_player) &amp;&amp; !chunksActivated){
-    instance_activate_region(x - (chunkWidth * 2), y - (chunkWidth * 2), chunkWidth * 5, chunkWidth * 5, 1);     
-    chunksActivated = 1;
-}else if (chunksActivated &amp;&amp; !place_meeting(x,y,obj_player)){
-    chunksActivated = 0;
-}
 </string>
           </argument>
         </arguments>

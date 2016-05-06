@@ -41,11 +41,11 @@ tempY = y;
 
 drawController = instance_create(0, 0, obj_drawControl);
 myBackpack = instance_create(0, 0, obj_backpack);
-
-instance_create(self.x + 16, self.y + 16, obj_rock);
-instance_create(self.x + 16, self.y - 16, obj_rock);
-instance_create(self.x - 16, self.y + 16, obj_stick);
-instance_create(self.x - 16, self.y - 16, obj_stick);
+//Me so horny
+instance_create(self.x + irandom_range(-100,100), self.y + irandom_range(-100,100), obj_rock);
+instance_create(self.x + irandom_range(-100,100), self.y + irandom_range(-100,100), obj_rock);
+instance_create(self.x + irandom_range(-100,100), self.y + irandom_range(-100,100), obj_stick);
+instance_create(self.x + irandom_range(-100,100), self.y + irandom_range(-100,100), obj_stick);
 
 
 gamepadLeftHorizontal = gamepad_axis_value(playerNumber - 1, gp_axislh);

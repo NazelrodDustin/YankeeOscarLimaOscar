@@ -53,51 +53,6 @@ repeat (lakeNumber){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Generate foliage and world
-randomize();
-genSizeX = room_width*6;
-genSizeY = room_height*6;
-
-//Generate bear caves
-var caveNumber = irandom_range(10,15);
-
-
-repeat(caveNumber){
-    var cave = instance_create(irandom(genSizeX),irandom(genSizeY),obj_bearCave);
-    with(cave){
-        //Make sure its not spawned too close to another bear cave
-        while(distance_to_object(instance_nearest(x,y,obj_bearCave)) &lt; 400){
-            x = irandom(genSizeX);
-            y = irandom(genSizeY);
-        }
-        //Make sure its not spawned on water
-        while(place_meeting(x,y,obj_water)){
-            x = irandom(genSizeX);
-            y = irandom(genSizeY);
-        }
-    }
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///Chunks
 worldSize = 50; // World width in chunks
 chunkSize = 1000;
@@ -118,6 +73,51 @@ repeat(worldSize*worldSize){
         yy += chunkSize;
     }    
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Generate foliage and world
+randomize();
+genSizeX = (chunkSize * 50);
+genSizeY = (chunkSize * 50);
+
+//Generate bear caves
+var caveNumber = irandom_range(5,10);
+
+
+repeat(caveNumber){
+    var cave = instance_create(irandom(genSizeX),irandom(genSizeY),obj_bearCave);
+    with(cave){
+        //Make sure its not spawned too close to another bear cave
+        while(distance_to_object(instance_nearest(x,y,obj_bearCave)) &lt; 400){
+            x = irandom(genSizeX);
+            y = irandom(genSizeY);
+        }
+        //Make sure its not spawned on water
+        while(place_meeting(x,y,obj_water)){
+            x = irandom(genSizeX);
+            y = irandom(genSizeY);
+        }
+    }
+}
+
 </string>
           </argument>
         </arguments>

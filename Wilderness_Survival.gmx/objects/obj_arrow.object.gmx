@@ -36,6 +36,7 @@ dummy.xOffset = 0;
 dummy.yOffset = 0;
 lenOffX = 0;
 distOff = 0;
+owner = noone;
 
 </string>
           </argument>

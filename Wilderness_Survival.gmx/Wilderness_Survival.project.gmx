@@ -19,6 +19,7 @@
     <sprite>sprites\spr_water</sprite>
     <sprite>sprites\spr_bearCave</sprite>
     <sprite>sprites\spr_pixle</sprite>
+    <sprite>sprites\spr_shit</sprite>
     <sprite>sprites\spr_bush</sprite>
     <sprite>sprites\spr_arrow</sprite>
     <sprite>sprites\spr_arrowStuck</sprite>
@@ -74,6 +75,7 @@
       <object>objects\obj_tree</object>
       <object>objects\obj_boulder</object>
       <object>objects\obj_rock</object>
+      <object>objects\obj_shit</object>
       <object>objects\obj_stick</object>
       <object>objects\obj_bush</object>
       <object>objects\obj_bloodPuddle</object>
