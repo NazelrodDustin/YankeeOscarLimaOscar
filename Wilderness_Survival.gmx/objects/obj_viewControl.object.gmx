@@ -335,15 +335,41 @@ if (playerOne.isMoving || playerTwo.isMoving){
 
 
 if (!gamepad_is_connected(0)){
+    playerOne.x = -50000;
+    playerOne.y = -50000;
+    playerOne.resetTimer = 0;
     instance_deactivate_object(playerOne);
 }else{
     instance_activate_object(playerOne);
+    playerOne.resetTimer += 1;
+    
+    if (playerOne.resetTimer == 1){
+        playerOne.x = playerOne.tempX;
+        playerOne.y = playerOne.tempY;
+    }
+    
+    if (playerOne.resetTimer &gt;= 2){
+        playerOne.resetTimer = 2;
+    }
 }
 
 if (!gamepad_is_connected(1)){
+    playerTwo.x = -50000;
+    playerTwo.y = -50000;
+    playerTwo.resetTimer = 0;
     instance_deactivate_object(playerTwo);
 }else{
     instance_activate_object(playerTwo);
+    playerTwo.resetTimer += 1;
+    
+    if (playerTwo.resetTimer == 1){
+        playerTwo.x = playerTwo.tempX;
+        playerTwo.y = playerTwo.tempY;
+    }
+    
+    if (playerTwo.resetTimer &gt;= 2){
+        playerTwo.resetTimer = 2;
+    }
 }
 </string>
           </argument>

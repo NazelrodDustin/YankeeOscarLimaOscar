@@ -15,7 +15,7 @@
     <sprite>sprites\spr_bearDead</sprite>
     <sprite>sprites\spr_tree</sprite>
     <sprite>sprites\spr_player</sprite>
-    <sprite>sprites\spr_rock</sprite>
+    <sprite>sprites\spr_boulder</sprite>
     <sprite>sprites\spr_water</sprite>
     <sprite>sprites\spr_bearCave</sprite>
     <sprite>sprites\spr_pixle</sprite>
@@ -23,15 +23,30 @@
     <sprite>sprites\spr_arrow</sprite>
     <sprite>sprites\spr_arrowStuck</sprite>
     <sprite>sprites\spr_blood</sprite>
+    <sprite>sprites\spr_stick</sprite>
+    <sprite>sprites\spr_rock</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_grass</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scr_distanceFromPointToPoint.gml</script>
-    <script>scripts\scr_despawnChunk.gml</script>
-    <script>scripts\scr_spawnChunk.gml</script>
+    <scripts name="Misc Scripts">
+      <script>scripts\scr_distanceFromPointToPoint.gml</script>
+      <script>scripts\scr_findString.gml</script>
+    </scripts>
+    <scripts name="Chunk Scripts">
+      <script>scripts\scr_despawnChunk.gml</script>
+      <script>scripts\scr_spawnChunk.gml</script>
+    </scripts>
+    <scripts name="Inventory Scripts">
+      <script>scripts\scr_getInventorySpace.gml</script>
+      <script>scripts\scr_setInventorySpace.gml</script>
+      <script>scripts\scr_hideInventory.gml</script>
+      <script>scripts\scr_showInventory.gml</script>
+      <script>scripts\scr_getNextInventoryItem.gml</script>
+      <script>scripts\scr_searchInventory.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_arialBlack</font>
@@ -45,7 +60,9 @@
       <object>objects\obj_foliageParent</object>
       <object>objects\obj_enemyParent</object>
       <object>objects\obj_worldGen</object>
+      <object>objects\obj_collectParent</object>
       <object>objects\obj_drawControl</object>
+      <object>objects\obj_backpack</object>
     </objects>
     <objects name="Enemies">
       <object>objects\obj_bear</object>
@@ -55,13 +72,15 @@
       <object>objects\obj_water</object>
       <object>objects\obj_bearCave</object>
       <object>objects\obj_tree</object>
+      <object>objects\obj_boulder</object>
       <object>objects\obj_rock</object>
+      <object>objects\obj_stick</object>
       <object>objects\obj_bush</object>
+      <object>objects\obj_bloodPuddle</object>
     </objects>
     <objects name="Equipment">
       <object>objects\obj_arrow</object>
     </objects>
-    <object>objects\obj_bloodPuddle</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rom_overworld</room>
