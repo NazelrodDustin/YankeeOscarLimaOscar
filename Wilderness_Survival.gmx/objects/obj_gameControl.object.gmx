@@ -30,6 +30,7 @@ randomize();
 
 gameEnd = 0;
 gameEndCount = false;
+debugoverlay = false;
 
 playerOne = instance_create(irandom(room_width), irandom(room_height), obj_player);
 playerTwo = instance_create(irandom(room_width), irandom(room_height), obj_player);
@@ -37,14 +38,14 @@ worldGeneration = instance_create(0, 0, obj_worldGen);
 viewController = instance_create(0, 0, obj_viewControl);
 drawController = instance_create(0, 0, obj_drawControl);
 
-
 viewController.playerOne = playerOne;
 viewController.playerTwo = playerTwo;
 
 playerOne.playerNumber = 1;
 playerTwo.playerNumber = 2;
-playerOne.drawController = drawController;
-playerTwo.drawController = drawController;
+
+playerOne.playerView = 0;
+playerTwo.playerView = 2;
 </string>
           </argument>
         </arguments>
@@ -95,6 +96,10 @@ gamepad_set_axis_deadzone(i, .35);
           <argument>
             <kind>1</kind>
             <string>///end game.
+
+if (gamepad_button_check(0, gp_select)){
+    game_end();
+}
 
 if (gameEndCount = 1){
     gameEnd += .016;
@@ -149,10 +154,12 @@ if (gameEnd &gt;= 3){
           <argument>
             <kind>1</kind>
             <string>///show debug overlay
-if (show_debug_overlay(true)){
+if (debugoverlay){
     show_debug_overlay(false);
+    debugoverlay = false;
 }else{
     show_debug_overlay(true);
+    debugoverlay = true;
 }
 </string>
           </argument>

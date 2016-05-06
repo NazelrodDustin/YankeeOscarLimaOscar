@@ -26,13 +26,27 @@
           <argument>
             <kind>1</kind>
             <string>///init.
-drawController = 0;
-
-isMoving = 0;
 playerNumber = 0;
+isMoving = 0;
 inaccuracy = 0;
 force = 0;
+resetTimer = 0;
 arrowShot = 0;
+points = 0;
+playerView = 0;
+coolDown = 0;
+
+tempX = x;
+tempY = y;  
+
+drawController = instance_create(0, 0, obj_drawControl);
+myBackpack = instance_create(0, 0, obj_backpack);
+
+instance_create(self.x + 16, self.y + 16, obj_rock);
+instance_create(self.x + 16, self.y - 16, obj_rock);
+instance_create(self.x - 16, self.y + 16, obj_stick);
+instance_create(self.x - 16, self.y - 16, obj_stick);
+
 
 gamepadLeftHorizontal = gamepad_axis_value(playerNumber - 1, gp_axislh);
 gamepadLeftVertical = gamepad_axis_value(playerNumber - 1, gp_axislv);
@@ -40,8 +54,40 @@ gamepadLeftVertical = gamepad_axis_value(playerNumber - 1, gp_axislv);
 gamepadRightHorizontal = gamepad_axis_value(playerNumber - 1, gp_axisrh);
 gamepadRightVertical = gamepad_axis_value(playerNumber - 1, gp_axisrv);
 enemy = 0;
+collect = 0;
+itemSelected = noone;
 
 movementSpeed = 30;
+
+
+alarm[0] = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Set backpack values.
+
+myBackpack.player = id;
+myBackpack.playerNumber = playerNumber;
+myBackpack.playerView = playerView;
 
 </string>
           </argument>
@@ -77,10 +123,20 @@ hspeed = gamepadLeftHorizontal * movementSpeed;
 vspeed = gamepadLeftVertical * movementSpeed;
 
 if (vspeed != 0 || hspeed != 0){
-    isMoving = 1;        
+    isMoving = 1;
+    tempX = x;
+    tempY = y;      
 }else{
     isMoving = 0;
 }
+
+if (gamepadRightHorizontal != 0 || gamepadRightVertical != 0){
+    image_angle = point_direction(self.x, self.y, self.x + gamepadRightHorizontal, self.y + gamepadRightVertical);
+}else if (gamepadLeftHorizontal != 0 || gamepadLeftVertical != 0){
+    image_angle = point_direction(self.x, self.y, self.x + gamepadLeftHorizontal, self.y + gamepadLeftVertical);
+}
+ 
+
 </string>
           </argument>
         </arguments>
@@ -160,7 +216,7 @@ if (arrowShot = 0){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Check for dead enemy
+            <string>///Check for collectables
 
 if (collision_circle(self.x, self.y, 16, obj_enemyParent, true, true)){
     enemy = (collision_circle(self.x, self.y, 16, obj_enemyParent, true, true));
@@ -173,6 +229,56 @@ if (collision_circle(self.x, self.y, 16, obj_enemyParent, true, true)){
 }else{
     enemy = 0;
     drawController.drawDeadText = false;
+}
+
+if (collision_circle(self.x, self.y, 16, obj_collectParent, true, true)){
+    collect = (collision_circle(self.x, self.y, 16, obj_collectParent, true, true));
+    if (itemSelected == noone){ 
+        if (!collect.inInv){ 
+            drawController.drawPickUpText = true;
+            drawController.collect = collect;
+            if (gamepad_button_check_released(playerNumber - 1, gp_face3)){
+                myBackpack.posX = 0;
+                myBackpack.posY = 0;
+                itemSelected = collect;
+                itemSelected.inInv = true;
+                coolDown = 1;
+            }
+            
+            if (itemSelected == collect){
+                collect.visible = false;
+                collect.x = 0;
+                collect.y = 0;
+                collect = 0;
+                drawController.drawPickUpText = false;
+            }
+        }
+    }
+}else{
+    collect = 0;
+    drawController.drawPickUpText = false;
+}
+
+if (coolDown == 0){
+    if (itemSelected != noone){
+        if (gamepad_button_check_released(playerNumber - 1, gp_face3)){
+            if (instance_exists(myBackpack.tempItem)){
+                myBackpack.posX = myBackpack.tempItem.offsetX;
+                myBackpack.posY = myBackpack.tempItem.offsetY;
+            }else{
+                myBackpack.tempItem = 
+                myBackpack.posX = 0;
+                myBackpack.posY = 0;
+            }
+            itemSelected.visible = true;
+            itemSelected.x = self.x;
+            itemSelected.y = self.y;
+            itemSelected.inInv = false;
+            itemSelected = noone;
+        }
+    }
+}else{
+    coolDown = 0;
 }
 </string>
           </argument>
@@ -196,7 +302,7 @@ if (collision_circle(self.x, self.y, 16, obj_enemyParent, true, true)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>
 depth = -y;
 </string>
           </argument>
@@ -228,12 +334,6 @@ depth = -y;
     image_blend = make_colour_rgb(255, 225, 225);
 }
 
-if (gamepadRightHorizontal != 0 || gamepadRightVertical != 0){
-    image_angle = point_direction(self.x, self.y, self.x + gamepadRightHorizontal, self.y + gamepadRightVertical);
-}else if (gamepadLeftHorizontal != 0 || gamepadLeftVertical != 0){
-    image_angle = point_direction(self.x, self.y, self.x + gamepadLeftHorizontal, self.y + gamepadLeftVertical);
-}
- 
 </string>
           </argument>
         </arguments>
