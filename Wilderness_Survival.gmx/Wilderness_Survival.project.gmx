@@ -5,10 +5,15 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound">
-    <sound>sound\snd_arrowFire0</sound>
-    <sound>sound\snd_arrowFire1</sound>
-    <sound>sound\snd_arrowFire2</sound>
-    <sound>sound\snd_arrowFire3</sound>
+    <sounds name="Sound effects">
+      <sound>sound\snd_arrowFire0</sound>
+      <sound>sound\snd_arrowFire3</sound>
+      <sound>sound\snd_arrowFire2</sound>
+      <sound>sound\snd_arrowFire1</sound>
+    </sounds>
+    <sounds name="Music">
+      <sound>sound\snd_song1</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_bear</sprite>
@@ -86,6 +91,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rom_overworld</room>
+    <room>rooms\room1</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

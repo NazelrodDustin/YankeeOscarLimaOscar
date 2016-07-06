@@ -31,6 +31,7 @@ image_index = 2;
 image_speed = 0;
 
 mySpawner = noone;
+
 </string>
           </argument>
         </arguments>

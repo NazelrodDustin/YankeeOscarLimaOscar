@@ -77,6 +77,38 @@ gamepad_set_axis_deadzone(i, .35);
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Music
+
+song[0] = snd_song1;
+song[1] = noone;
+
+songNumber = 1;
+currentSong = 0;
+global.musicVolume = 0;
+
+global.songPlaying = audio_play_sound(song[currentSong], 10, 0);
+audio_sound_gain(global.songPlaying, global.musicVolume, 1);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="1">
       <action>
@@ -107,6 +139,40 @@ if (gameEndCount = 1){
 
 if (gameEnd &gt;= 3){
     game_end();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Music
+
+
+if (!audio_is_playing(song[currentSong])){
+    currentSong ++;
+    global.songPlaying = audio_play_sound(song[currentSong], 10, 0);
+    audio_sound_gain(global.songPlaying, global.musicVolume, 1);
+    //If the playlist is at the end, start it over at a random position 
+    if (currentSong == noone){
+        currentSong = (songNumber - songNumber);
+        global.songPlaying = audio_play_sound(song[currentSong], 10, 0);
+        audio_sound_gain(global.songPlaying, global.musicVolume, 1);
+    }
 }
 </string>
           </argument>
@@ -161,6 +227,37 @@ if (debugoverlay){
     show_debug_overlay(true);
     debugoverlay = true;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="10" enumb="100">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_activate_object(obj_foliageChunkParent);
+with(obj_foliageChunkParent){
+    if (hasLake){
+        playerOne.x = x;
+        playerOne.y = y;
+        break;
+    }
+}
+instance_deactivate_object(obj_foliageChunkParent);
 </string>
           </argument>
         </arguments>

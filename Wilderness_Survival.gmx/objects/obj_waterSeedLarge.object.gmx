@@ -52,7 +52,7 @@
             <string>///Generate Water
 
 myChunk = noone;
-lakeSize = irandom_range(180,200);
+lakeSize = irandom_range(50,100);
 lakeSeed = 0;
 
 
@@ -61,17 +61,24 @@ var yy = 0;
 var rowAmount = 0;
 var row = 0;
 var rowSize = irandom_range(8,40);
+xxx[0] = xx;
+yyy[0] = yy;
+var water = noone;
 
 
 for (i = 0; i &lt; lakeSize; i++){
-    var water = instance_create(x + xx, y + yy, obj_water);
+    water = instance_create(x + xx, y + yy, obj_water);
+    //water.mySeed = id;
     water.mySpawner = id;
     rowAmount ++;
     xx += 32;
+    xxx[i + 1] = xx;
     if (rowAmount &gt;= rowSize){
         row ++;
         yy += 32;
+        yyy[i + 1] = yy;
         xx = choose(0,32,64,96,-32,-64,);
+        xxx[i + 1] = xx;
         rowAmount = 0;
         rowSize += choose(1,2,3,4,-1,-2,-3,-4,);
         if (rowSize &lt;= 4){
@@ -79,6 +86,76 @@ for (i = 0; i &lt; lakeSize; i++){
         }
     }   
 } 
+
+var maxX = 0;
+var minX = 0;
+var minY = 0;
+var maxY = 0;
+
+with(obj_water){
+    if (mySpawner = other.id){
+        if (x &gt; maxX){
+            maxX = x;
+        }
+        if (x &lt; minX){
+            minX = x;
+        }
+        if (y &gt; maxY){
+            maxY = y;
+        }
+        if (y &lt; minY){
+            minY = y;  
+        }
+    }else{
+        break;
+    }
+
+}
+
+maxY += 0;
+maxX += 0;
+minX -= 128;
+
+instance_create(x + minX, y - 64, obj_shit);
+instance_create(x + maxX, y - 64, obj_shit);
+instance_create(x + minX, y + maxY, obj_shit);
+instance_create(x + maxX, y + maxY, obj_shit);
+
+sprite = 0;
+surfWidth = maxX;
+surfHeight = maxY; 
+spriteSurf = surface_create(surfWidth, surfHeight);
+
+surface_set_target(spriteSurf);
+    with(obj_water){
+        if (mySpawner = other.id){
+            var spriteX = x - other.x;
+            var spriteY = y - other.y;
+            draw_sprite(sprite_index, image_index, spriteX, spriteY + 32);
+            instance_destroy();    
+        }else{
+            break;
+        }     
+    }
+surface_reset_target();
+    
+sprite = sprite_create_from_surface(spriteSurf, 0, 0, surfWidth, surfHeight, 1, 0, 0, 0);
+sprite_index = sprite;
+
+surface_free(spriteSurf);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </string>
           </argument>
         </arguments>
@@ -101,7 +178,7 @@ for (i = 0; i &lt; lakeSize; i++){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var myId = id;
+            <string>/*var myId = id;
     with(obj_water){
         if (mySpawner == other.id){
             instance_destroy();
@@ -114,7 +191,10 @@ for (i = 0; i &lt; lakeSize; i++){
               
         }
     
-    } 
+    } */
+    
+    //surface_free(spriteSurf);
+    sprite_delete(sprite);
 </string>
           </argument>
         </arguments>
@@ -139,27 +219,75 @@ for (i = 0; i &lt; lakeSize; i++){
             <kind>1</kind>
             <string>///Spawning/despawning
 
-if (distance_to_object(obj_player) &gt;= (myChunk.chunkWidth * 2)){
-    var myId = id;
-    with(obj_water){
-        if (mySpawner == other.id){
-            instance_destroy();
-            (other.myChunk).lakeSpawned = 0;
-            (other.myChunk).myLake = noone;
-            
-            with(myId){
-                instance_destroy();
-            }
-              
-        }
-    
-    } 
-      
-}
-
 if (!instance_exists(myChunk)){
     instance_destroy();
 }
+
+if (distance_to_object(obj_player &gt; 1000000)){
+    //instance_destroy();
+}
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+draw_sprite(sprite, 0, x, y);
+
+draw_text(x, y, string(myChunk));
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="82">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with(obj_water){
+    instance_destroy();
+}
+with(obj_shit){
+    instance_destroy();
+}
+instance_create(x, y, obj_waterSeedLarge);
+instance_destroy();
+
+
 </string>
           </argument>
         </arguments>

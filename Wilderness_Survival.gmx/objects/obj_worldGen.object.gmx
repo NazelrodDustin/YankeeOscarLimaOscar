@@ -54,7 +54,7 @@ repeat (lakeNumber){
           <argument>
             <kind>1</kind>
             <string>///Chunks
-worldSize = 50; // World width in chunks
+worldSize = 25; // World width in chunks
 chunkSize = 1000;
 foliageDensity = 40;
 
